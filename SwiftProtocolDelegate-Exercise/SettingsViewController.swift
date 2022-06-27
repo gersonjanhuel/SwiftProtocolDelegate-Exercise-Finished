@@ -8,10 +8,6 @@
 import UIKit
 
 
-protocol SettingsViewControllerDelegate: AnyObject {
-    func didSelectPainting(_ painting: String)
-}
-
 class SettingsViewController: UIViewController {
     
     @IBOutlet weak var paintingPicker: UIPickerView!
@@ -20,22 +16,19 @@ class SettingsViewController: UIViewController {
                                        "Birds - McGill",
                                        "Botanical - Europeana"]
     
-    weak var delegate: SettingsViewControllerDelegate?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "Settings"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(saveSettings))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneSettings))
         
         paintingPicker.dataSource = self
         paintingPicker.delegate = self
     }
     
-    @objc func saveSettings() {
-        
+    @objc func doneSettings() {
         // dismiss modal
         dismiss(animated: true)
     }
@@ -61,7 +54,6 @@ extension SettingsViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        let painting = paintingsResource[row]
-        delegate?.didSelectPainting(painting)
+        
     }
 }
